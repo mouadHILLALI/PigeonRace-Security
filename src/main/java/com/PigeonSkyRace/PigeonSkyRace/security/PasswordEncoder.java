@@ -1,5 +1,4 @@
 package com.PigeonSkyRace.PigeonSkyRace.security;
 
-public interface PasswordEncoder {
-    public String encode(String password);
+public interface PasswordEncoder extends org.springframework.security.crypto.password.PasswordEncoder {
 }
