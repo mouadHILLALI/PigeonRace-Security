@@ -1,10 +1,7 @@
 package com.PigeonSkyRace.PigeonSkyRace.model;
 
 import com.PigeonSkyRace.PigeonSkyRace.enums.UserRoles;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -30,6 +27,7 @@ public class User implements UserDetails {
     @NotNull
     private String password;
     @NotNull
+    @Enumerated(EnumType.STRING)
     private UserRoles role = UserRoles.ROLE_USER;
     private boolean isEnabled = true;
 
