@@ -2,7 +2,9 @@ package com.PigeonSkyRace.PigeonSkyRace.model;
 
 import com.PigeonSkyRace.PigeonSkyRace.enums.UserRoles;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -23,6 +25,9 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     @NotNull
+    @Column(unique = true)
+    @NotBlank
+    @Size(min = 3)
     private String username;
     @NotNull
     private String password;
