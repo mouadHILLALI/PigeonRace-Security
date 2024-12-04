@@ -3,15 +3,10 @@ spring:
     name: PigeonSkyRace
 
   datasource:
-    postgresql:
-      jdbc-url: jdbc:postgresql://localhost:5432/pigeonSky
-      username: postgres
-      password: user
-      driver-class-name: org.postgresql.Driver
-
-  data:
-    mongodb:
-      uri: mongodb://localhost:27017/pigeon_competition_db
+    url: jdbc:postgresql://localhost:5432/pigeonSky
+    username: postgres
+    password: user
+    driver-class-name: org.postgresql.Driver
 
   jpa:
     hibernate:
@@ -25,17 +20,4 @@ server:
 logging:
   level:
     root: DEBUG
-    org.springframework.data.mongodb: DEBUG
     org.springframework.jdbc: DEBUG
-
----
-spring:
-  config:
-    activate:
-      on-profile: development
-  datasource:
-    postgresql:
-      jdbc-url: jdbc:postgresql://localhost:5432/pigeonSky
-  data:
-    mongodb:
-      uri: mongodb://dev-server:27017/dev_pigeon_competition

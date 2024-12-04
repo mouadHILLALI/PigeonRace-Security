@@ -3,6 +3,7 @@ package com.PigeonSkyRace.PigeonSkyRace.security.Impl;
 import com.PigeonSkyRace.PigeonSkyRace.security.CustomUserDetailsService;
 import com.PigeonSkyRace.PigeonSkyRace.security.PasswordEncoder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Component;
 public class CustomAutheticationProvider implements AuthenticationProvider {
 
     private final PasswordEncoder passwordEncoder;
+    @Qualifier("customUserDetailsService")
     private final CustomUserDetailsService userDetailsService;
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
