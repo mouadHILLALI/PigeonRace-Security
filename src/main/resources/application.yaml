@@ -21,3 +21,5 @@ logging:
   level:
     root: DEBUG
     org.springframework.jdbc: DEBUG
+
+secret:
