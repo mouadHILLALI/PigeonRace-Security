@@ -1,7 +1,6 @@
 package com.PigeonSkyRace.PigeonSkyRace.security.Impl;
 
 import com.PigeonSkyRace.PigeonSkyRace.dto.Response.AccessDeniedErrorDto;
-import com.PigeonSkyRace.PigeonSkyRace.dto.Response.ErrorDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 @Component
@@ -26,7 +24,6 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
         if (authentication != null && authentication.getAuthorities()
                 .stream().anyMatch(grantedAuthority ->
                         !grantedAuthority.getAuthority().equals("ROLE_ADMIN"))) {
-
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             response.setContentType("application/json");
             LocalDateTime timestamp = LocalDateTime.now();
@@ -39,7 +36,44 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
                             request.getRequestURI()
                     ))
             );
+        }else if(authentication != null && authentication.getAuthorities().stream().anyMatch(grantedAuthority ->
+                !grantedAuthority.getAuthority().equals("ROLE_ORGANIZER"))) {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            response.setContentType("application/json");
+            LocalDateTime timestamp = LocalDateTime.now();
+            String formattedTimestamp = timestamp.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+            response.getWriter().write(
+                    new ObjectMapper().writeValueAsString(new AccessDeniedErrorDto("Organizer access denied" ,
+                            formattedTimestamp ,
+                            HttpStatus.FORBIDDEN,
+                            request.getRequestURI()))
+            );
+        } else if (authentication == null && authentication.isAuthenticated() == false) {
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.setContentType("application/json");
+            LocalDateTime timestamp = LocalDateTime.now();
+            String formattedTimestamp = timestamp.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+            response.getWriter().write(
+                    new ObjectMapper().writeValueAsString(new AccessDeniedErrorDto(
+                            "Bad credentials" ,
+                            formattedTimestamp ,
+                            HttpStatus.BAD_REQUEST ,
+                            request.getRequestURI()
+                    ))
+            );
+        } else{
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            response.setContentType("application/json");
+            LocalDateTime timestamp = LocalDateTime.now();
+            String formattedTimestamp = timestamp.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+            response.getWriter().write(
+                    new ObjectMapper().writeValueAsString(new AccessDeniedErrorDto(
+                            "Access denied please authenticate first" ,
+                            formattedTimestamp ,
+                            HttpStatus.FORBIDDEN ,
+                            request.getRequestURI()
+                    ))
+            );
+        }
         }
     }
-
-}
