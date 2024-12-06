@@ -19,6 +19,7 @@ public class SecurityConfig {
 
     private final CustomAutheticationProvider customAutheticationProvider;
     private final CustomAuthenticationManager customAuthenticationManager;
+    private final CustomAccessDeniedHandler customAccessDeniedHandler;
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
            return http.csrf(customizer -> customizer.disable())
@@ -30,6 +31,7 @@ public class SecurityConfig {
                    .authenticationManager(customAuthenticationManager)
                    .authenticationProvider(customAutheticationProvider)
                    .sessionManagement(session-> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                   .exceptionHandling(exception -> exception.accessDeniedHandler(customAccessDeniedHandler))
                    .httpBasic(Customizer.withDefaults()).build();
    }
 }
