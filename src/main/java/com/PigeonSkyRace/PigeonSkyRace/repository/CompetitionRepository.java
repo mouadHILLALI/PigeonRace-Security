@@ -1,7 +1,9 @@
 package com.PigeonSkyRace.PigeonSkyRace.repository;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
-
 import com.PigeonSkyRace.PigeonSkyRace.model.Competition;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface CompetitionRepository extends MongoRepository<Competition, String> {}
+import java.util.UUID;
+
+public interface CompetitionRepository extends JpaRepository<Competition, UUID> {
+}
