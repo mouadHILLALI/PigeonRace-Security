@@ -2,7 +2,7 @@ spring:
   application:
     name: PigeonSkyRace
   profiles:
-    active: test
+    active: dev
 server:
   port: 8082
 
