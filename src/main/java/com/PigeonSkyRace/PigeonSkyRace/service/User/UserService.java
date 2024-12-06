@@ -10,4 +10,5 @@ import org.springframework.stereotype.Component;
 public interface UserService {
     RegisterUserResponseDto Register(RegisterUserRequestDto user);
     ManagedUserRoleResponseDto manageUserRole(ManageUserRoleRequestDto user);
+    boolean isUsernameExist(String username);
 }

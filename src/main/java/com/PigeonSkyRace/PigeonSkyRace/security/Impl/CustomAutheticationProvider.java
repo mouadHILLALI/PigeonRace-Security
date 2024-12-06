@@ -1,5 +1,6 @@
 package com.PigeonSkyRace.PigeonSkyRace.security.Impl;
 
+import com.PigeonSkyRace.PigeonSkyRace.exception.entitesCustomExceptions.AuthenticationFailedException;
 import com.PigeonSkyRace.PigeonSkyRace.security.CustomUserDetailsService;
 import com.PigeonSkyRace.PigeonSkyRace.security.PasswordEncoder;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,7 @@ public class CustomAutheticationProvider implements AuthenticationProvider {
         String password = authentication.getCredentials().toString();
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
         if (!passwordEncoder.matches(password, userDetails.getPassword())) {
-            throw new BadCredentialsException("Bad credentials");
+            throw new AuthenticationFailedException("Bad credentials");
         }
         return new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
     }
